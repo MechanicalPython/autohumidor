@@ -13,3 +13,8 @@ autohumidor
     - ht_sensor.py
     - response_bot.py -- Depreciated
     - sheet_bot.py
+Resources
+    - data.pkl
+    - sheet_id.txt - string for google sheets id
+    - slack_id.txt - string for slack channel id
+    - credentials.json - google sheets credentials
