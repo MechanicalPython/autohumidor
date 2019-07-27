@@ -38,5 +38,6 @@ def interval_ht_reading(interval=10):
 def raw_ht_reading():
     return dht.read_retry(sensor, pin)
 
+
 if __name__ == '__main__':
     print(interval_ht_reading())
