@@ -27,7 +27,8 @@ SCOPE = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/au
 # The ID and range of a sample spreadsheet.
 SHEET_ID = '1abiI71WJp8_iHEYXMEB4F183ekOWFP1IXfWYFjxK-8s'
 
-creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, SCOPE)
+creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file,
+                                                         SCOPE)
 client = gspread.authorize(creds)
 sheet = client.open('Humidor').sheet1
 

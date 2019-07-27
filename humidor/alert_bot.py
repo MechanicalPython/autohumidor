@@ -42,5 +42,6 @@ def main():
     except Exception as e:
         send_message('Alert bot main error: {}'.format(e), channel)
 
+
 if __name__ == '__main__':
     main()
