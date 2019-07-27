@@ -16,7 +16,7 @@ import re
 from humidor import get_slack_client_id, send_message
 
 
-resources_file = f"{os.path.abspath(__file__).split('/humidor')[0]}/Resources"
+resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])
 
 data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)
