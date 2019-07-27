@@ -9,3 +9,7 @@ alert_bot gets past 24 hours of data and sends a message to slack for it
 
 Project strucutre
 autohumidor
+    - alert_bot.py
+    - ht_sensor.py
+    - response_bot.py -- Depreciated
+    - sheet_bot.py
