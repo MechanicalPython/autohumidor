@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/bin/python3.5
 
 from slackclient import SlackClient
 import os
@@ -7,7 +7,7 @@ import os
 starterbot_id = None
 channel = "mattpihumidor"
 
-resources_file = f"{os.path.abspath(__file__).split('/humidor')[0]}/Resources"
+resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])
 
 data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)

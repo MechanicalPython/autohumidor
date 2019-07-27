@@ -12,8 +12,8 @@ from slackclient import SlackClient
 from humidor import get_slack_client_id, send_message
 
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
-dir_path = os.path.dirname(os.path.realpath(__file__))
-data_file = "{}/data.pkl".format(dir_path)
+resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])
+data_file = "{}/data.pkl".format(resources_file)
 
 
 def get_latest_reading():

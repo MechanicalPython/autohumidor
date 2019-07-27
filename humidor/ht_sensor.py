@@ -13,7 +13,6 @@ import pickle
 import os
 import datetime
 from slackclient import SlackClient
-import logging
 from humidor import get_slack_client_id, send_message
 
 
@@ -23,9 +22,8 @@ channel = "mattpihumidor"
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
 sensor = 22 
 pin = 4
-dir_path = os.path.dirname(os.path.realpath(__file__))
-data_file = "{}/data.pkl".format(dir_path)
-logging.basicConfig(filename='{}/log.log'.format(dir_path))
+resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])
+data_file = "{}/data.pkl".format(resources_file)
 
 
 def ht_reading(interval=10):
