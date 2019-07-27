@@ -1,0 +1,249 @@
+2019-05-26 00:00:17,517:INFO:66.95% and 23.18C)
+2019-05-27 00:00:17,515:INFO:66.26% and 23.13C)
+2019-05-28 00:00:17,001:INFO:67.21% and 22.3C)
+2019-05-29 00:00:17,243:INFO:66.24% and 21.61C)
+2019-05-30 00:00:18,051:INFO:66.24% and 21.54C)
+2019-05-31 00:00:15,615:INFO:67.01% and 21.16C)
+2019-06-01 00:00:15,321:INFO:67.55% and 22.45C)
+2019-06-02 00:00:17,525:INFO:67.87% and 23.03C)
+2019-06-03 00:00:19,024:INFO:67.89% and 24.54C)
+2019-06-04 00:00:19,268:INFO:66.58% and 24.11C)
+2019-06-05 00:00:18,187:INFO:65.5% and 22.95C)
+2019-06-06 00:00:18,591:INFO:66.73% and 22.07C)
+2019-06-07 00:00:17,508:INFO:66.77% and 21.6C)
+2019-06-08 00:00:19,760:INFO:66.61% and 21.0C)
+2019-06-09 00:00:18,099:INFO:67.61% and 20.91C)
+2019-06-10 00:00:15,388:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 69, in main
+    h, t = average_humidity()
+  File "/home/humidor/autohumidor/alert_bot.py", line 39, in average_humidity
+    data = pickle.load(f)
+EOFError: Ran out of input
+2019-06-11 00:00:19,121:INFO:67.28% and 21.01C)
+2019-06-12 00:00:18,346:INFO:68.42% and 20.66C)
+2019-06-13 00:00:18,308:INFO:69.33% and 20.82C)
+2019-06-14 00:00:17,795:INFO:69.97% and 20.73C)
+2019-06-15 00:00:17,871:INFO:70.79% and 20.89C)
+2019-06-16 00:00:18,690:INFO:71.08% and 21.05C)
+2019-06-17 00:00:17,116:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 69, in main
+    h, t = average_humidity()
+  File "/home/humidor/autohumidor/alert_bot.py", line 39, in average_humidity
+    data = pickle.load(f)
+EOFError: Ran out of input
+2019-06-18 00:00:16,912:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 69, in main
+    h, t = average_humidity()
+  File "/home/humidor/autohumidor/alert_bot.py", line 39, in average_humidity
+    data = pickle.load(f)
+EOFError: Ran out of input
+2019-06-19 00:00:17,528:INFO:71.77% and 22.15C)
+2019-06-20 00:00:18,576:INFO:71.64% and 21.86C)
+2019-06-21 00:00:19,060:INFO:71.32% and 21.88C)
+2019-06-22 00:00:17,800:INFO:71.09% and 21.85C)
+2019-06-23 00:00:17,278:INFO:70.4% and 22.5C)
+2019-06-24 00:00:19,967:INFO:69.57% and 22.87C)
+2019-06-25 00:00:17,770:INFO:69.83% and 23.37C)
+2019-06-26 00:00:17,942:INFO:70.34% and 24.17C)
+2019-06-27 00:00:18,420:INFO:70.62% and 23.92C)
+2019-06-28 00:00:21,838:INFO:70.52% and 23.61C)
+2019-06-29 00:00:19,546:INFO:70.09% and 23.21C)
+2019-06-30 00:00:24,414:INFO:71.08% and 25.04C)
+2019-07-01 00:00:33,248:INFO:70.62% and 26.4C)
+2019-07-02 00:00:45,124:INFO:68.65% and 25.56C)
+2019-07-03 00:00:24,257:INFO:66.93% and 24.54C)
+2019-07-04 00:00:48,899:INFO:65.88% and 24.18C)
+2019-07-05 00:00:56,558:INFO:65.28% and 24.68C)
+2019-07-06 00:01:15,010:INFO:65.17% and 25.89C)
+2019-07-07 00:01:24,675:INFO:64.17% and 25.51C)
+2019-07-08 00:00:17,967:INFO:64.7% and 24.56C)
+2019-07-09 00:00:18,643:INFO:64.78% and 24.08C)
+2019-07-10 00:00:18,265:INFO:64.6% and 23.7C)
+2019-07-11 00:00:18,038:INFO:65.41% and 24.7C)
+2019-07-12 00:00:15,759:INFO:65.85% and 25.53C)
+2019-07-13 00:00:15,479:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 69, in main
+    h, t = average_humidity()
+  File "/home/humidor/autohumidor/alert_bot.py", line 49, in average_humidity
+    avg_h = round(statistics.mean(all_humidity), 2)
+  File "/usr/lib/python3.5/statistics.py", line 330, in mean
+    raise StatisticsError('mean requires at least one data point')
+statistics.StatisticsError: mean requires at least one data point
+2019-07-14 00:00:16,841:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 69, in main
+    h, t = average_humidity()
+  File "/home/humidor/autohumidor/alert_bot.py", line 49, in average_humidity
+    avg_h = round(statistics.mean(all_humidity), 2)
+  File "/usr/lib/python3.5/statistics.py", line 330, in mean
+    raise StatisticsError('mean requires at least one data point')
+statistics.StatisticsError: mean requires at least one data point
+2019-07-15 00:00:15,132:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 69, in main
+    h, t = average_humidity()
+  File "/home/humidor/autohumidor/alert_bot.py", line 49, in average_humidity
+    avg_h = round(statistics.mean(all_humidity), 2)
+  File "/usr/lib/python3.5/statistics.py", line 330, in mean
+    raise StatisticsError('mean requires at least one data point')
+statistics.StatisticsError: mean requires at least one data point
+2019-07-16 00:00:18,059:INFO:64.52% and 23.77C)
+2019-07-17 00:00:18,909:INFO:64.96% and 23.72C)
+2019-07-18 00:00:17,605:INFO:65.4% and 24.94C)
+2019-07-19 00:00:18,122:INFO:64.95% and 24.8C)
+2019-07-20 00:00:18,377:INFO:64.76% and 24.02C)
+2019-07-21 00:00:20,051:INFO:66.2% and 24.05C)
+2019-07-22 00:00:16,341:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connection.py", line 160, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw)
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/util/connection.py", line 57, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/usr/lib/python3.5/socket.py", line 733, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connectionpool.py", line 603, in urlopen
+    chunked=chunked)
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connectionpool.py", line 355, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.5/http/client.py", line 1107, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.5/http/client.py", line 1152, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.5/http/client.py", line 1103, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.5/http/client.py", line 934, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.5/http/client.py", line 877, in send
+    self.connect()
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connection.py", line 183, in connect
+    conn = self._new_conn()
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connection.py", line 169, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0xb61fb310>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/adapters.py", line 449, in send
+    timeout=timeout
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connectionpool.py", line 641, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/util/retry.py", line 399, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='google.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xb61fb310>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 67, in main
+    if requests.get('http://google.com').status_code != 200:
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='google.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xb61fb310>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+2019-07-23 00:00:15,309:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connection.py", line 160, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw)
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/util/connection.py", line 57, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/usr/lib/python3.5/socket.py", line 733, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connectionpool.py", line 603, in urlopen
+    chunked=chunked)
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connectionpool.py", line 355, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.5/http/client.py", line 1107, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.5/http/client.py", line 1152, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.5/http/client.py", line 1103, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.5/http/client.py", line 934, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.5/http/client.py", line 877, in send
+    self.connect()
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connection.py", line 183, in connect
+    conn = self._new_conn()
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connection.py", line 169, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0xb61cc310>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/adapters.py", line 449, in send
+    timeout=timeout
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/connectionpool.py", line 641, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/home/humidor/.local/lib/python3.5/site-packages/urllib3/util/retry.py", line 399, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='google.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xb61cc310>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 67, in main
+    if requests.get('http://google.com').status_code != 200:
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/api.py", line 75, in get
+    return request('get', url, params=params, **kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/api.py", line 60, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/sessions.py", line 533, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/sessions.py", line 646, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/humidor/.local/lib/python3.5/site-packages/requests/adapters.py", line 516, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='google.com', port=80): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0xb61cc310>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))
+2019-07-24 00:00:17,121:INFO:67.28% and 25.22C)
+2019-07-25 00:00:17,164:INFO:68.38% and 28.28C)
+2019-07-26 00:00:14,804:INFO:66.93% and 28.55C)
+2019-07-27 00:00:15,728:ERROR:Alert bot error)
+Traceback (most recent call last):
+  File "/home/humidor/autohumidor/alert_bot.py", line 79, in <module>
+    main()
+  File "/home/humidor/autohumidor/alert_bot.py", line 69, in main
+    h, t = average_humidity()
+  File "/home/humidor/autohumidor/alert_bot.py", line 49, in average_humidity
+    avg_h = round(statistics.mean(all_humidity), 2)
+  File "/usr/lib/python3.5/statistics.py", line 330, in mean
+    raise StatisticsError('mean requires at least one data point')
+statistics.StatisticsError: mean requires at least one data point
