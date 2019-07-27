@@ -6,3 +6,6 @@ __init__ contails send_message method
 sheet_bot pushes data to google sheets
 ht_sensor reads and saves the HDT raw data
 alert_bot gets past 24 hours of data and sends a message to slack for it
+
+Project strucutre
+autohumidor
