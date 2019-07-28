@@ -21,7 +21,6 @@ def get_slack_client_id(file=slack_id):
 
 
 def send_message(message, channel=channel):
-    print(message)
     slack_client = SlackClient(str(get_slack_client_id()))
     slack_client.api_call(
             "chat.postMessage",
