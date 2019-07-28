@@ -6,9 +6,7 @@ import pickle
 import datetime
 import statistics
 from humidor.utils import send_message
-import sys
-print(sys.path)
-quit()
+
 channel = "mattpihumidor"
 
 resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])
