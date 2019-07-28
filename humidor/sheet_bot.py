@@ -13,11 +13,11 @@ from slackclient import SlackClient
 import datetime
 import time
 import re
-from humidor.utils import get_slack_client_id, send_message
 
 
 resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])
 
+slack_id = '{}/slack_id.txt'.format(resources_file)
 data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)
 credentials_file = "{}/credentials.json".format(resources_file)
@@ -32,10 +32,22 @@ creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file,
 client = gspread.authorize(creds)
 sheet = client.open('Humidor').sheet1
 
-slack_client = SlackClient(get_slack_client_id())
 starterbot_id = None
 channel = "mattpihumidor"
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
+
+
+def get_slack_client_id(file=slack_id):
+    with open(file, 'r') as f:
+        return f.read().strip()
+
+
+def send_message(message, channel=channel):
+    slack_client = SlackClient(str(get_slack_client_id()))
+    slack_client.api_call(
+            "chat.postMessage",
+            channel=channel,
+            text=message)
 
 
 def split_data():
