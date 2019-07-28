@@ -13,7 +13,7 @@ import pickle
 import os
 import datetime
 from slackclient import SlackClient
-from humidor import get_slack_client_id, send_message
+from humidor.utils import get_slack_client_id, send_message
 
 
 slack_client = SlackClient(get_slack_client_id())

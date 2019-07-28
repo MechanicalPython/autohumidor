@@ -13,7 +13,7 @@ from slackclient import SlackClient
 import datetime
 import time
 import re
-from humidor import get_slack_client_id, send_message
+from humidor.utils import get_slack_client_id, send_message
 
 
 resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])

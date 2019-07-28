@@ -9,7 +9,7 @@ import time
 import pickle
 from subprocess import call
 from slackclient import SlackClient
-from humidor import get_slack_client_id, send_message
+from humidor.utils import get_slack_client_id, send_message
 
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
 resources_file = "{}/Resources".format(os.path.abspath(__file__).split('/humidor')[0])
