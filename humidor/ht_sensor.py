@@ -14,7 +14,7 @@ import os
 import datetime
 from slackclient import SlackClient
 
-resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(__file__)))
+resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)

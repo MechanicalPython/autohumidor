@@ -15,7 +15,7 @@ import time
 import re
 
 
-resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(__file__)))
+resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 slack_id = '{}/slack_id.txt'.format(resources_file)
 data_file = "{}/data.pkl".format(resources_file)

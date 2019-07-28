@@ -11,7 +11,7 @@ from subprocess import call
 from slackclient import SlackClient
 
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
-resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(__file__)))
+resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 data_file = "{}/data.pkl".format(resources_file)
 slack_id = '{}/slack_id.txt'.format(resources_file)
 channel = "mattpihumidor"

@@ -9,12 +9,11 @@ from slackclient import SlackClient
 
 channel = "mattpihumidor"
 
-resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(__file__)))
+resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)
 credentials_file = "{}/credentials.json".format(resources_file)
 slack_id = '{}/slack_id.txt'.format(resources_file)
-
 
 def get_slack_client_id(file=slack_id):
     with open(file, 'r') as f:
