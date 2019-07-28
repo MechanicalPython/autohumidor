@@ -56,5 +56,4 @@ def main():
 
 
 if __name__ == '__main__':
-    send_message('Hello')
-    # main()
+    main()
