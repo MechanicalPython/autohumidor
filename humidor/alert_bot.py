@@ -38,7 +38,7 @@ def avg_humidity_temp(minutes=5):
 def main():
     try:
         h, t = avg_humidity_temp(60*60*24)
-        send_message(f'Humidity and Tempertaure for past 24 hours: {h}% and {t}C', channel)
+        send_message('Humidity and Tempertaure for past 24 hours: {}% and {}C'.format(h, t), channel)
     except Exception as e:
         send_message('Alert bot main error: {}'.format(e), channel)
 
