@@ -3,6 +3,4 @@
 *.pyc
 /venv
 /Resources/data.pkl
-/Resources/slack_id.txt
-/Resources/sheet_id.txt
 /Resources/
