@@ -16,6 +16,9 @@ from slackclient import SlackClient
 
 resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+if os.path.exists(resources_file) is False:
+    os.mkdir(resources_file)
+
 data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)
 credentials_file = "{}/credentials.json".format(resources_file)

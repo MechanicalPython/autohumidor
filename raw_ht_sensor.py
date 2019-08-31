@@ -16,4 +16,4 @@ data_file = "{}/data.pkl".format(dir_path)
 
 
 if __name__ == '__main__':
-    dht.read_retry(sensor, pin)
+    print(dht.read_retry(sensor, pin))
