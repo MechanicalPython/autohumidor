@@ -1,7 +1,6 @@
-#! /usr/bin/python3.5
+#! /usr/bin/python3
 
 import os
-import time
 import pickle
 import datetime
 import statistics
@@ -14,6 +13,7 @@ data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)
 credentials_file = "{}/credentials.json".format(resources_file)
 slack_id = '{}/slack_id.txt'.format(resources_file)
+
 
 def get_slack_client_id(file=slack_id):
     with open(file, 'r') as f:
