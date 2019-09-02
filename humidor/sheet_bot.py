@@ -12,126 +12,110 @@ import statistics
 import datetime
 import time
 import re
-from humidor import send_message
-
-resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-data_file = "{}/data.pkl".format(resources_file)
-posting_file = "{}/posting.pkl".format(resources_file)
-credentials_file = "{}/credentials.json".format(resources_file)
-# If modifying these scopes, delete the file token.pickle.
-SCOPE = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets']
-
-# The ID and range of a sample spreadsheet.
-SHEET_ID = '1abiI71WJp8_iHEYXMEB4F183ekOWFP1IXfWYFjxK-8s'
-
-creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, SCOPE)
-client = gspread.authorize(creds)
-sheet = client.open('Humidor').sheet1
-
-starterbot_id = None
-RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
+from humidor import send_message, data_file, posting_file, credentials_file
 
 
-def split_data():
-    """Opens data.pkl, splits raw data and this hour data and saves them to post_data.pkl and data.pkl."""
-    with open(data_file, 'rb') as f:
-        raw_data = pickle.load(f)
-    opening_time = datetime.datetime.now()
-    # raw_data in {time stamp: {'Humidity': h, 'Temperature': t}}
-    # Get list of times. Order it. Iterate through pulling the date and hour. Split into hour groups
-    posting_raw = {}  # Format: {YYYY-mm-dd H:00:00: {'H': ls of H, 'T': ls of T}}
-    this_hour_raw = {}
-    for time, h_t in sorted(raw_data.items()):
-        date = "{}-{}-{} {}:00:00".format(time.year, time.month, time.day, time.hour)
-        if date == '{}-{}-{} {}:00:00'.format(opening_time.year, opening_time.month, opening_time.day, opening_time.hour):
-            this_hour_raw.update({time: h_t})
-        else:
-            posting_raw.update({time: h_t})
-    # Save the files to posting.pkl and data.pkl
-    with open(f'{resources_file}/thishour.pkl', 'wb') as f:
-        pickle.dump(this_hour_raw, f)
-    with open(posting_file, 'wb') as f:
-        pickle.dump(posting_raw, f)
-
-
-def post_data(posting_data):
+class PostToSheets:
     """
-    Input raw data from posting.pkl, convert the times to string,
-    [{'Tmax': 60, 'H': 20, 'Tmin': 70, 'Hour': 10, 'T': 50, 'Hmax': 30, 'Hmin': 40},]
-    list of dicts. Each list element is a row. 
+    From data.pkl, post the data to google sheets, in chronological order
     """
-    # Convert raw to dict of hours and lists of raw H and T
-    times = {}
-    for dtime, h_t in sorted(posting_data.items()):
-        date = "{}-{}-{} {}:00:00".format(dtime.year, dtime.month, dtime.day, dtime.hour)
-        h = h_t['Humidity']
-        t = h_t['Temperature']
-        if date in times.keys():
-            times[date]['H'].append(h)
-            times[date]['T'].append(t)
-        else:
-            times.update({date: {'H': [h], 'T': [t]}})
+    def __init__(self):
+        self.SCOPE = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets']
+        self.SHEET_ID = '1abiI71WJp8_iHEYXMEB4F183ekOWFP1IXfWYFjxK-8s'
+        self.creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, self.SCOPE)
+        self.client = gspread.authorize(self.creds)
+        self.sheet = self.client.open('Humidor').sheet1
 
-    # Find min, max and median of raw data
-    data = []
-    for dtime, h_t in sorted(times.items()):
-        h = h_t['H']
-        t = h_t['T']
-        Hmean = round(statistics.median(h), 2)
-        Hmax = round(max(h), 2)
-        Hmin = round(min(h), 2)
-        Tmean = round(statistics.median(t), 2)
-        Tmax = round(max(t), 2)
-        Tmin = round(min(t), 2)
-        data.append({'Hour': dtime, 'H': Hmean, 'Hmax': Hmax, 'Hmin': Hmin, 'T': Tmean, 'Tmax': Tmax, 'Tmin': Tmin})
+        with open(data_file, 'rb') as f:
+            self.data = pickle.load(f)
+        self.posting_data = {}  # Format: {YYYY-mm-dd H:00:00: {'H': ls of H, 'T': ls of T}}
+        self.this_hour_raw = {}
 
-    # Post data to sheets
-    num_rows = len(data)
-    max_rows = sheet.row_count
-    next_free_row = len(sheet.col_values(1)) + 1
-    if num_rows + next_free_row > max_rows:
-        sheet.add_rows(num_rows+10)  # Adds more rows if needed.
-        send_message('Running out of room on spreadsheet')
+    def pull_past_data(self):
+        opening_time = datetime.datetime.now()
+        for time, h_t in sorted(self.data.items()):
+            date = "{}-{}-{} {}:00:00".format(time.year, time.month, time.day, time.hour)
+            if date == '{}-{}-{} {}:00:00'.format(opening_time.year, opening_time.month, opening_time.day, opening_time.hour):
+                self.this_hour_raw.update({time: h_t})
+            else:
+                self.posting_data.update({time: h_t})
 
-    # Get order of hours
-    hours = [d['Hour'] for d in data]
-    hours.sort()
-    dict_data = {}
-    data = [dict_data.update({hour['Hour']: hour}) for hour in data]
-    for hour in hours:  # dict_data - {hour: {'Hour': hour, 'T': int, ...
-        row = dict_data[hour]
-        rowdata = [row['Hour'], row['H'], row['Hmax'], row['Hmin'], row['T'], row['Tmax'], row['Tmin']]
-        column_num = 1 
-        for item in rowdata:
+    def convert_to_posting_format(self):
+
+        # Convert to {hour: {'H': [ls of humiditys], {'T': [ls of temps], ...}
+        times = {}
+        for dtime, h_t in sorted(self.posting_data.items()):
+
+            date = f"{dtime.year}-{dtime.month}-{dtime.day} {dtime.hour}:00:00"
+            h = h_t['Humidity']
+            t = h_t['Temperature']
+
+            if date in times.keys():  # Either make or append the data to times
+                times[date]['H'].append(h)
+                times[date]['T'].append(t)
+            else:
+                times.update({date: {'H': [h], 'T': [t]}})
+
+        # Get average temp and hum for each hour
+        for dtime, h_t in times.items():
+            times[dtime]['H'] = round(statistics.median(times[dtime]['H']), 2)
+            times[dtime]['T'] = round(statistics.median(times[dtime]['T']), 2)
+
+        return times
+
+    def post_data(self, data):
+        """
+        post data to
+        :param data:
+        :return:
+        """
+        # Check for enough room in spreadsheet
+        num_rows = len(data)
+        max_rows = self.sheet.row_count
+        next_free_row = len(self.sheet.col_values(1)) + 1
+        if num_rows + next_free_row > max_rows:
+            self.sheet.add_rows(num_rows + 10)  # Adds more rows if needed.
+            send_message('Running out of room on spreadsheet')
+
+        # data format: {hour: {'H': mean hum, 'T': mean temp}, }
+        # hour format: f"{dtime.year}-{dtime.month}-{dtime.day} {dtime.hour}:00:00"
+        sorted_data = sorted(data)
+        for hour in sorted_data:
+            humidity = data[hour]['H']
+            temperature = data[hour]['T']
+            # hour = yyyy-m-d hour:00:00
+
+            # column order is hour, humidity, temp
             notposted = True
             while notposted:
                 try:
-                    sheet.update_cell(next_free_row, column_num, item)  # (row, column, value)
+                    self.sheet.update_cell(next_free_row, 1, hour)  # (row, column, value)
+                    self.sheet.update_cell(next_free_row, 2, humidity)
+                    self.sheet.update_cell(next_free_row, 3, temperature)
                     notposted = False
                 except Exception as e:
                     if re.search('"code": 429', str(e)):
                         time.sleep(100)
-            time.sleep(1.1)  # To avoid the 100 requests per 100 seconds limit
-            column_num = column_num + 1
-        next_free_row += 1
+                time.sleep(1.1)  # To avoid the 100 requests per 100 seconds limit
+            next_free_row += 1
 
-    os.remove(posting_file)
+    def main(self):
+        self.pull_past_data()
+        data = self.convert_to_posting_format()
+        self.post_data(data)
+        # Effectively resets data.pkl
+        with open(data_file, 'wb') as write_file:
+            pickle.dump(self.this_hour_raw, write_file)
 
 
 def main():
     send_message('Sheet bot is posting data')
 
     try:
-        split_data()  # Split raw data into two files: posting data and thishour.pkl to leave alone
-        with open(posting_file, 'rb') as post_file:
-            data_to_post = pickle.load(post_file)
-        post_data(data_to_post)
-        # Successful posting of data
-        os.rename(f'{resources_file}/thishour.pkl', data_file)  # Effectively resets data.pkl
+        PostToSheets().main()
     except Exception as e:
         send_message(f'Error: sheet bot failed to post data {e}')
 
 
 if __name__ == '__main__':
-    main()
+    PostToSheets().main()

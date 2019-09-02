@@ -4,14 +4,13 @@ import os
 import pickle
 import datetime
 import statistics
-from humidor import send_message
+from humidor import send_message, resources_file
 
 
-resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-data_file = "{}/data.pkl".format(resources_file)
+data_file = f"{resources_file}/data.pkl"
 
 
-def avg_humidity_temp(minutes=5):
+def avg_humidity_temp(minutes=60*60):
     # Get data from file
 
     with open(data_file, 'rb') as f:

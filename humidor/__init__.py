@@ -4,13 +4,18 @@
 from slackclient import SlackClient
 import os
 
-channel = "mattpihumidor"
-
 resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/Resources"
+
+if os.path.exists(resources_file) is False:
+    os.mkdir(resources_file)
+
+
 data_file = f"{resources_file}/data.pkl"
 posting_file = f"{resources_file}/posting.pkl"
 credentials_file = f"{resources_file}/credentials.json"
 slack_id = f'{resources_file}/slack_id.txt'
+
+channel = "mattpihumidor"
 
 
 def get_slack_client_id(file=slack_id):

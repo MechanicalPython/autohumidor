@@ -12,18 +12,11 @@ import statistics as stats
 import pickle
 import os
 import datetime
-from humidor import send_message
+from humidor import send_message, data_file, posting_file, credentials_file, slack_id
 
 
-resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/Resources"
 
-if os.path.exists(resources_file) is False:
-    os.mkdir(resources_file)
 
-data_file = "{}/data.pkl".format(resources_file)
-posting_file = "{}/posting.pkl".format(resources_file)
-credentials_file = "{}/credentials.json".format(resources_file)
-slack_id = '{}/slack_id.txt'.format(resources_file)
 
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
 sensor = 22 
@@ -31,7 +24,8 @@ pin = 4
 
 
 def ht_reading(interval=10):
-    # Gives an average reading of humidity and temp for a given time interval (seconds). Multiple of 2 best
+    """Gives an average reading of humidity and temp for a given time interval (seconds).
+    """
     t_end = time.time() + interval
     hum = []
     temp = []
@@ -43,6 +37,8 @@ def ht_reading(interval=10):
 
 
 def write_to_file(data_to_append):
+    """Writes data to data.pkl
+    """
     with open(data_file, 'rb') as f:
         data = pickle.load(f)
     data_to_append.update(data)
