@@ -43,29 +43,26 @@ def ht_reading(interval=10):
 
 
 def write_to_file(data_to_append):
-    if os.path.exists(os.path.abspath(data_file)) is False:
-        with open(data_file, 'wb') as f:
-            pickle.dump(data_to_append, f)
-    elif os.stat(data_file).st_size == 0:
-        with open(data_file, 'wb') as f:
-            pickle.dump(data_to_append, f)
-    else:
-        with open(data_file, 'rb') as f:
-            data = pickle.load(f)
-        data_to_append.update(data)
-                
-        with open(data_file, 'wb') as f:
-            pickle.dump(data_to_append, f)
+    with open(data_file, 'rb') as f:
+        data = pickle.load(f)
+    data_to_append.update(data)
+    with open(data_file, 'wb') as f:
+        pickle.dump(data_to_append, f)
 
 
 def main():
+    # If data file does not exist, make one.
+    if os.path.exists(os.path.abspath(data_file)) is False or os.stat(data_file).st_size == 0:
+        with open(data_file, 'wb') as f:
+            pickle.dump({}, f)
+
     while True:
         try:
             h, t = ht_reading()  # AdaFruit_DHT will return None if no sensor data that gives a TypeError when handeling stats.mean
             timenow = datetime.datetime.now()
             write_to_file({timenow: {'Humidity': h, 'Temperature': t}})
         except TypeError:
-            send_message('ERROR with HDT22 sensor. No values being returned. Will retry in 5 minutes.', channel)
+            send_message('ERROR with HDT22 sensor. No values being returned. Will retry in 5 minutes.')
             time.sleep(60*5)
 
 
