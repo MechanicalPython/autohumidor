@@ -11,7 +11,7 @@ import statistics
 import datetime
 import time
 import re
-from humidor import send_message, data_file, credentials_file
+from . import send_message, data_file, credentials_file
 
 
 class PostToSheets:

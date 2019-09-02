@@ -4,7 +4,7 @@ import os
 import pickle
 import datetime
 import statistics
-from humidor import send_message, resources_file
+from . import send_message, resources_file
 
 
 data_file = f"{resources_file}/data.pkl"
