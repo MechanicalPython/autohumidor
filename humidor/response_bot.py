@@ -9,25 +9,12 @@ import time
 import pickle
 from subprocess import call
 from slackclient import SlackClient
+from humidor import send_message, get_slack_client_id
+
 
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
 resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 data_file = "{}/data.pkl".format(resources_file)
-slack_id = '{}/slack_id.txt'.format(resources_file)
-channel = "mattpihumidor"
-
-
-def get_slack_client_id(file=slack_id):
-    with open(file, 'r') as f:
-        return f.read().strip()
-
-
-def send_message(message, channel=channel):
-    slack_client = SlackClient(str(get_slack_client_id()))
-    slack_client.api_call(
-            "chat.postMessage",
-            channel=channel,
-            text=message)
 
 
 def get_latest_reading():

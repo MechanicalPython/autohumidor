@@ -9,15 +9,13 @@ import os.path
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 import statistics
-from slackclient import SlackClient
 import datetime
 import time
 import re
-
+from humidor import send_message
 
 resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-slack_id = '{}/slack_id.txt'.format(resources_file)
 data_file = "{}/data.pkl".format(resources_file)
 posting_file = "{}/posting.pkl".format(resources_file)
 credentials_file = "{}/credentials.json".format(resources_file)
@@ -27,27 +25,12 @@ SCOPE = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/au
 # The ID and range of a sample spreadsheet.
 SHEET_ID = '1abiI71WJp8_iHEYXMEB4F183ekOWFP1IXfWYFjxK-8s'
 
-creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file,
-                                                         SCOPE)
+creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, SCOPE)
 client = gspread.authorize(creds)
 sheet = client.open('Humidor').sheet1
 
 starterbot_id = None
-channel = "mattpihumidor"
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
-
-
-def get_slack_client_id(file=slack_id):
-    with open(file, 'r') as f:
-        return f.read().strip()
-
-
-def send_message(message, channel=channel):
-    slack_client = SlackClient(str(get_slack_client_id()))
-    slack_client.api_call(
-            "chat.postMessage",
-            channel=channel,
-            text=message)
 
 
 def split_data():
@@ -137,7 +120,7 @@ def post_data(posting_data):
 
 
 def main():
-    send_message('Sheet bot is posting data', channel)
+    send_message('Sheet bot is posting data')
 
     try:
         split_data()  # Split raw data into two files: posting data and thishour.pkl to leave alone
@@ -147,7 +130,7 @@ def main():
         # Successful posting of data
         os.rename(f'{resources_file}/thishour.pkl', data_file)  # Effectively resets data.pkl
     except Exception as e:
-        send_message(f'Error: sheet bot failed to post data {e}', channel)
+        send_message(f'Error: sheet bot failed to post data {e}')
 
 
 if __name__ == '__main__':

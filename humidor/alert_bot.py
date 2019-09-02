@@ -4,28 +4,11 @@ import os
 import pickle
 import datetime
 import statistics
-from slackclient import SlackClient
+from humidor import send_message
 
-channel = "mattpihumidor"
 
 resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 data_file = "{}/data.pkl".format(resources_file)
-posting_file = "{}/posting.pkl".format(resources_file)
-credentials_file = "{}/credentials.json".format(resources_file)
-slack_id = '{}/slack_id.txt'.format(resources_file)
-
-
-def get_slack_client_id(file=slack_id):
-    with open(file, 'r') as f:
-        return f.read().strip()
-
-
-def send_message(message, channel=channel):
-    slack_client = SlackClient(str(get_slack_client_id()))
-    slack_client.api_call(
-            "chat.postMessage",
-            channel=channel,
-            text=message)
 
 
 def avg_humidity_temp(minutes=5):
@@ -50,9 +33,9 @@ def avg_humidity_temp(minutes=5):
 def main():
     try:
         h, t = avg_humidity_temp(60*60*24)
-        send_message('Humidity and Tempertaure for past 24 hours: {}% and {}C'.format(h, t), channel)
+        send_message('Humidity and Tempertaure for past 24 hours: {}% and {}C'.format(h, t))
     except Exception as e:
-        send_message('Alert bot main error: {}'.format(e), channel)
+        pass
 
 
 if __name__ == '__main__':

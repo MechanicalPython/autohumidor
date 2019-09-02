@@ -1,10 +1,10 @@
 #! /usr/bin/python3
 
-
 """
 Measures humid and temp for a 10 second average and pushes to data.json in
 {datetime.datetime.now(): {'Humidity': h, 'Temperature': t} } format
 """
+
 import RPi.GPIO as GPIO
 import time
 import Adafruit_DHT as dht
@@ -12,9 +12,10 @@ import statistics as stats
 import pickle
 import os
 import datetime
-from slackclient import SlackClient
+from humidor import send_message
 
-resources_file = "{}/Resources".format(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/Resources"
 
 if os.path.exists(resources_file) is False:
     os.mkdir(resources_file)
@@ -24,24 +25,9 @@ posting_file = "{}/posting.pkl".format(resources_file)
 credentials_file = "{}/credentials.json".format(resources_file)
 slack_id = '{}/slack_id.txt'.format(resources_file)
 
-starterbot_id = None
-channel = "mattpihumidor"
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
 sensor = 22 
 pin = 4
-
-
-def get_slack_client_id(file=slack_id):
-    with open(file, 'r') as f:
-        return f.read().strip()
-
-
-def send_message(message, channel=channel):
-    slack_client = SlackClient(str(get_slack_client_id()))
-    slack_client.api_call(
-            "chat.postMessage",
-            channel=channel,
-            text=message)
 
 
 def ht_reading(interval=10):
