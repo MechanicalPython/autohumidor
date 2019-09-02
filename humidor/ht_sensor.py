@@ -12,7 +12,7 @@ import statistics as stats
 import pickle
 import os
 import datetime
-from humidor import send_message, data_file, posting_file, credentials_file, slack_id
+from humidor import send_message, data_file
 
 
 

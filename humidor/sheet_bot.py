@@ -5,14 +5,13 @@
 """
 
 import pickle
-import os.path
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 import statistics
 import datetime
 import time
 import re
-from humidor import send_message, data_file, posting_file, credentials_file
+from humidor import send_message, data_file, credentials_file
 
 
 class PostToSheets:
