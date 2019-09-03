@@ -15,15 +15,12 @@ import datetime
 from humidor import send_message, data_file
 
 
-
-
-
 RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
 sensor = 22 
 pin = 4
 
 
-def ht_reading(interval=10):
+def ht_reading(interval=60):
     """Gives an average reading of humidity and temp for a given time interval (seconds).
     """
     t_end = time.time() + interval
