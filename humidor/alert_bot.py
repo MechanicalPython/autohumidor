@@ -10,7 +10,7 @@ from humidor import send_message, resources_file
 data_file = f"{resources_file}/data.pkl"
 
 
-def avg_humidity_temp(minutes=60*60):
+def avg_humidity_temp(minutes=60*60*24):
     # Get data from file
 
     with open(data_file, 'rb') as f:

@@ -52,6 +52,7 @@ def main():
         with open(data_file, 'wb') as f:
             pickle.dump({}, f)
 
+    send_message('HDT22 sensor is now online')
     while True:
         try:
             h, t = ht_reading()  # AdaFruit_DHT will return None if no sensor data that gives a TypeError when handeling stats.mean

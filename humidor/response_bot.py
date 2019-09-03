@@ -57,7 +57,4 @@ def main():
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except Exception as e:
-        send_message("Reponse Bot had an error: {}".format(e))
+    main()
