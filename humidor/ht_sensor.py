@@ -48,8 +48,10 @@ def main():
     if os.path.exists(os.path.abspath(data_file)) is False or os.stat(data_file).st_size == 0:
         with open(data_file, 'wb') as f:
             pickle.dump({}, f)
-
-    send_message('HDT22 sensor is now online')
+    try:
+        send_message('HDT22 sensor is now online')
+    except Exception:
+        pass
     while True:
         try:
             h, t = ht_reading()  # AdaFruit_DHT will return None if no sensor data that gives a TypeError when handeling stats.mean
