@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/bin/env python3
 
 """Will collect data.json data every 24 hours at 1am, summarise it, tear down the data.json and set a fresh file
 

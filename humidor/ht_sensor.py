@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#! /usr/bin/env python3
 
 """
 Measures humid and temp for a 10 second average and pushes to data.json in
