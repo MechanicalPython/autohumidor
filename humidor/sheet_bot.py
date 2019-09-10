@@ -71,8 +71,11 @@ class PostToSheets:
         # Convert to {hour: {'H': [ls of humiditys], {'T': [ls of temps], ...}
         times = {}
         for dtime, h_t in sorted(self.posting_data.items()):
+            hour = dtime.hour
+            if len(str(hour)) == 1:  # Problem with ordering was single digit hours had no forward 0.
+                hour = f'0{hour}'
 
-            date = f"{dtime.year}-{dtime.month}-{dtime.day} {dtime.hour}:00:00"
+            date = f"{dtime.year}-{dtime.month}-{dtime.day} {hour}:00:00"
             h = h_t['Humidity']
             t = h_t['Temperature']
 

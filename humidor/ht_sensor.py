@@ -40,8 +40,7 @@ def send_message(message, channel=channel):
             text=message)
 
 
-RTM_READ_DELAY = 1  # 1 sec delay between reading from RTM
-sensor = 22 
+sensor = 22
 pin = 4
 
 
