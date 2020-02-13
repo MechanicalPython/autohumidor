@@ -21,10 +21,9 @@ resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}
 if os.path.exists(resources_file) is False:
     os.mkdir(resources_file)
 
-data_file = f"{resources_file}/data.pkl"
-posting_file = f"{resources_file}/posting.pkl"
 credentials_file = f"{resources_file}/credentials.json"
 slack_id_file = f'{resources_file}/slack_id.txt'
+sheet_id_file = f'{resources_file}/sheet_id.txt'
 
 channel = "mattpihumidor"
 
@@ -108,7 +107,9 @@ def main():
 
     now = datetime.now()
     current_time = datetime(year=now.year, month=now.month, day=now.day, hour=now.hour).strftime("%d/%m/%Y %H:00:00")
-    PostToSheets('Humidor', '1abiI71WJp8_iHEYXMEB4F183ekOWFP1IXfWYFjxK-8s').post_data([[current_time, str(h), str(t)]])
+    with open(sheet_id_file, 'r') as f:
+        sheet_id = f.read()
+    PostToSheets('Humidor', sheet_id).post_data([[current_time, str(h), str(t)]])
 
 
 if __name__ == '__main__':
