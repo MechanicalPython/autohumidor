@@ -6,12 +6,16 @@ Measures humid and temp for a 10 second average and pushes to data.json in
 """
 
 from datetime import datetime
+from datetime import timedelta
 import os
 import re
 import statistics as stats
 import time
 
-import Adafruit_DHT as dht
+try:
+    import Adafruit_DHT as dht
+except ImportError:
+    pass
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from slackclient import SlackClient
@@ -68,6 +72,7 @@ class PostToSheets:
         self.creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, self.SCOPE)
         self.client = gspread.authorize(self.creds)
         self.sheet = self.client.open(sheet_name).sheet1
+        self.all_values = self.sheet.get_all_values()
 
     def post_data(self, data):
         """
@@ -81,7 +86,7 @@ class PostToSheets:
         # Check for enough room in spreadsheet
         num_rows = len(data)
         max_rows = self.sheet.row_count
-        next_free_row = len(self.sheet.col_values(1)) + 1
+        next_free_row = len(self.all_values) + 1
         if num_rows + next_free_row > max_rows:
             self.sheet.add_rows(num_rows + 10)  # Adds more rows if needed.
 
@@ -98,6 +103,30 @@ class PostToSheets:
                 time.sleep(1.1)  # To avoid the 100 requests per 100 seconds limit
             next_free_row += 1
 
+    def last_row(self):
+        """Returns the last row in the sheet as a list"""
+        return self.all_values[-1]
+
+
+def fill_in_nan(sheet, next_posted_hour):
+    """If there has been some error and data is missing, fill in the =na() for each missing data point"""
+    # Get last item. If the last item is not one hour behind the next hour to be posted, fill in the rest with na()
+    last_hour = sheet.last_row()[0]
+    last_hour = datetime.strptime(last_hour, "%d/%m/%Y %H:00:00")
+    next_posted_hour = datetime.strptime(next_posted_hour, "%d/%m/%Y %H:00:00")
+    hours_between = (next_posted_hour - last_hour).seconds/60/60
+
+    if hours_between > 1:
+        data_to_post = []
+        hour = last_hour + timedelta(hours=1)
+        while hour < next_posted_hour:
+            data_to_post.append([hour.strftime("%d/%m/%Y %H:00:00"), "=na()", "=na()"])
+            hour += timedelta(hours=1)
+        sheet.post_data(data_to_post)
+        return data_to_post
+    else:
+        return None
+
 
 def main():
     h, t = ht_reading(60 * 5)  # 5 minutes of readings.
@@ -109,7 +138,9 @@ def main():
     current_time = datetime(year=now.year, month=now.month, day=now.day, hour=now.hour).strftime("%d/%m/%Y %H:00:00")
     with open(sheet_id_file, 'r') as f:
         sheet_id = f.read()
-    PostToSheets('Humidor', sheet_id).post_data([[current_time, str(h), str(t)]])
+    sheet = PostToSheets('Humidor', sheet_id)
+    fill_in_nan(sheet, current_time)
+    sheet.post_data([[current_time, str(h), str(t)]])
 
 
 if __name__ == '__main__':
