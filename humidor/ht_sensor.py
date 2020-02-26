@@ -11,11 +11,12 @@ import os
 import re
 import statistics as stats
 import time
+import requests
+import pickle
 
-try:
-    import Adafruit_DHT as dht
-except ImportError:
-    pass
+import adafruit_dht
+import board
+
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from slackclient import SlackClient
@@ -28,11 +29,11 @@ if os.path.exists(resources_file) is False:
 credentials_file = f"{resources_file}/credentials.json"
 slack_id_file = f'{resources_file}/slack_id.txt'
 sheet_id_file = f'{resources_file}/sheet_id.txt'
+data_cache_file = f'{resources_file}/cache.pkl'
 
 channel = "mattpihumidor"
 
-sensor = 22
-pin = 4
+dht = adafruit_dht.DHT22(board.D4)
 
 
 def send_slack(message, channel=channel):
@@ -52,7 +53,8 @@ def ht_reading(interval=60):
     hum = []
     temp = []
     while time.time() < t_end:
-        humidity, temperature = dht.read_retry(sensor, pin)  # Takes an indeterminant amount of time to return value.
+        temperature = dht.temperature   # Takes an indeterminant amount of time to return value.
+        humidity = dht.humidity
         hum.append(humidity)
         temp.append(temperature)
     if len(hum) > 0 and len(temp) > 0:
@@ -136,12 +138,40 @@ def main():
 
     now = datetime.now()
     current_time = datetime(year=now.year, month=now.month, day=now.day, hour=now.hour).strftime("%d/%m/%Y %H:00:00")
-    with open(sheet_id_file, 'r') as f:
-        sheet_id = f.read()
-    sheet = PostToSheets('Humidor', sheet_id)
-    fill_in_nan(sheet, current_time)
-    sheet.post_data([[current_time, str(h), str(t)]])
+    data_to_post = [[current_time, str(h), str(t)]]
+
+    if os.path.exists(data_cache_file) is False:
+        with open(data_cache_file, 'wb') as f:
+            pickle.dump([], f)
+
+    with open(data_cache_file, 'rb') as f:
+        cache_data = pickle.load(f)
+    data_to_post = cache_data.append(data_to_post)
+
+    if requests.get('http://www.google.com').status_code == 200:
+        with open(sheet_id_file, 'r') as f:
+            sheet_id = f.read()
+        sheet = PostToSheets('Humidor', sheet_id)
+        fill_in_nan(sheet, current_time)
+        sheet.post_data(data_to_post)
+    else:
+        with open(data_cache_file, 'wb') as f:
+            pickle.dump(data_to_post, f)
+
 
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
