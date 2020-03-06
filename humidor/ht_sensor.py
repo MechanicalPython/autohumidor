@@ -3,6 +3,13 @@
 """
 Measures humid and temp for a 10 second average and pushes to data.json in
 {datetime.datetime.now(): {'Humidity': h, 'Temperature': t} } format
+
+Circuit requires a 4.7K - 10K resistor.
+Wires
+    power - black
+    data  - purple
+    ground - white
+
 """
 
 from datetime import datetime
@@ -34,7 +41,6 @@ data_cache_file = f'{resources_file}/cache.pkl'
 channel = "mattpihumidor"
 
 dht = adafruit_dht.DHT22(board.D4)
-
 
 def send_slack(message, channel=channel):
     with open(slack_id_file, 'r') as f:
