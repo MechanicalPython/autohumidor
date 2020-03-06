@@ -42,6 +42,7 @@ channel = "mattpihumidor"
 
 dht = adafruit_dht.DHT22(board.D4)
 
+
 def send_slack(message, channel=channel):
     with open(slack_id_file, 'r') as f:
         slack_id = f.read().strip()
