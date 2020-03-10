@@ -107,27 +107,31 @@ class PostToSheets:
 
     def last_row(self):
         """Returns the last row in the sheet as a list"""
+        if len(self.all_values) == 0:
+            return None
         return self.all_values[-1]
 
+    def fill_in_nan(self, next_posted_hour):
+        """If there has been some error and data is missing, fill in the =na() for each missing data point"""
+        # Get last item. If the last item is not one hour behind the next hour to be posted, fill in the rest with na()
+        last_hour = self.sheet.last_row()[0]
+        if last_hour is None:
+            # If there is no data in the sheet, just do nothing.
+            return None
+        last_hour = datetime.strptime(last_hour, "%d/%m/%Y %H:00:00")
+        next_posted_hour = datetime.strptime(next_posted_hour, "%d/%m/%Y %H:00:00")
+        hours_between = (next_posted_hour - last_hour).seconds/60/60
 
-def fill_in_nan(sheet, next_posted_hour):
-    """If there has been some error and data is missing, fill in the =na() for each missing data point"""
-    # Get last item. If the last item is not one hour behind the next hour to be posted, fill in the rest with na()
-    last_hour = sheet.last_row()[0]
-    last_hour = datetime.strptime(last_hour, "%d/%m/%Y %H:00:00")
-    next_posted_hour = datetime.strptime(next_posted_hour, "%d/%m/%Y %H:00:00")
-    hours_between = (next_posted_hour - last_hour).seconds/60/60
-
-    if hours_between > 1:
-        data_to_post = []
-        hour = last_hour + timedelta(hours=1)
-        while hour < next_posted_hour:
-            data_to_post.append([hour.strftime("%d/%m/%Y %H:00:00"), "=na()", "=na()"])
-            hour += timedelta(hours=1)
-        sheet.post_data(data_to_post)
-        return data_to_post
-    else:
-        return None
+        if hours_between > 1:
+            data_to_post = []
+            hour = last_hour + timedelta(hours=1)
+            while hour < next_posted_hour:
+                data_to_post.append([hour.strftime("%d/%m/%Y %H:00:00"), "=na()", "=na()"])
+                hour += timedelta(hours=1)
+            self.sheet.post_data(data_to_post)
+            return data_to_post
+        else:
+            return None
 
 
 def main():
@@ -152,7 +156,7 @@ def main():
         with open(sheet_id_file, 'r') as f:
             sheet_id = f.read()
         sheet = PostToSheets('Humidor', sheet_id)
-        fill_in_nan(sheet, current_time)
+        sheet.fill_in_nan(current_time)
         sheet.post_data(data_to_post)
     else:
         with open(data_cache_file, 'wb') as f:
