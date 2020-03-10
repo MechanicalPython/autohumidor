@@ -129,7 +129,7 @@ class PostToSheets:
             while hour < next_posted_hour:
                 data_to_post.append([hour.strftime("%d/%m/%Y %H:00:00"), "=na()", "=na()"])
                 hour += timedelta(hours=1)
-            self.sheet.post_data(data_to_post)
+            self.post_data(data_to_post)
             return data_to_post
         else:
             return None
