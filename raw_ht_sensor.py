@@ -11,9 +11,6 @@ import adafruit_dht
 import statistics as stats
 import sys
 
-# Initial the dht device, with data pin connected to:
-dhtDevice = adafruit_dht.DHT22(board.D18)
-
 
 def ht_reading(interval=60):
     """Gives an average reading of humidity and temp for a given time interval (seconds).
