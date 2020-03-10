@@ -24,6 +24,7 @@ import statistics as stats
 import time
 import requests
 import pickle
+import sys
 
 import adafruit_dht
 import board
@@ -135,7 +136,12 @@ class PostToSheets:
 
 
 def main():
-    h, t = ht_reading(60 * 10)  # 10 minutes of readings.
+    args = sys.argv
+
+    if len(args) > 1 and args[1].isdigit():
+        h, t = ht_reading(60 * int(args[1]))
+    else:
+        h, t = ht_reading(60 * 10)  # 10 minutes of readings.
     if h is None or t is None:
         h = '=na()'
         t = '=na()'
