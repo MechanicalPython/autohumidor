@@ -50,10 +50,13 @@ def ht_reading(interval=60):
     hum = []
     temp = []
     while time.time() < t_end:
-        temperature = dht.temperature   # Takes an indeterminant amount of time to return value.
-        humidity = dht.humidity
-        hum.append(humidity)
-        temp.append(temperature)
+        try:
+            temperature = dht.temperature   # Takes an indeterminant amount of time to return value.
+            humidity = dht.humidity
+            hum.append(humidity)
+            temp.append(temperature)
+        except RuntimeError:
+            pass
     if len(hum) > 0 and len(temp) > 0:
         return round(stats.mean(hum), 2), round(stats.mean(temp), 2)
     else:
