@@ -5,7 +5,7 @@ The following files need to be added to autohumidor/Resources/
     sheet_id.txt -> the google sheets id
     credentials.json -> google sheets api credentials json file. Given when setting up api keys.
 
-Measures temp and humidity for 10, 1 minute sections and adds that to the google sheets.
+Measures temp and humidity for 10 minutes and adds that to the google sheets.
 If google sheets addition fails, save the data to a cache.pkl file to be uploaded when internet access is restored.
 
 
@@ -129,7 +129,7 @@ def fill_in_nan(sheet, next_posted_hour):
 
 
 def main():
-    h, t = ht_reading(60 * 5)  # 5 minutes of readings.
+    h, t = ht_reading(60 * 10)  # 10 minutes of readings.
     if h is None or t is None:
         h = '=na()'
         t = '=na()'
