@@ -1,8 +1,13 @@
 #! /usr/bin/env python3
 
 """
-Measures humid and temp for a 10 second average and pushes to data.json in
-{datetime.datetime.now(): {'Humidity': h, 'Temperature': t} } format
+The following files need to be added to autohumidor/Resources/
+    sheet_id.txt -> the google sheets id
+    credentials.json -> google sheets api credentials json file. Given when setting up api keys.
+
+Measures temp and humidity for 10, 1 minute sections and adds that to the google sheets.
+If google sheets addition fails, save the data to a cache.pkl file to be uploaded when internet access is restored.
+
 
 Circuit requires a 4.7K - 10K resistor.
 Wires
@@ -26,7 +31,6 @@ import board
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-from slackclient import SlackClient
 
 resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/Resources"
 
@@ -34,23 +38,10 @@ if os.path.exists(resources_file) is False:
     os.mkdir(resources_file)
 
 credentials_file = f"{resources_file}/credentials.json"
-slack_id_file = f'{resources_file}/slack_id.txt'
 sheet_id_file = f'{resources_file}/sheet_id.txt'
 data_cache_file = f'{resources_file}/cache.pkl'
 
-channel = "mattpihumidor"
-
-dht = adafruit_dht.DHT22(board.D4)
-
-
-def send_slack(message, channel=channel):
-    with open(slack_id_file, 'r') as f:
-        slack_id = f.read().strip()
-    slack_client = SlackClient(str(slack_id))
-    slack_client.api_call(
-        "chat.postMessage",
-        channel=channel,
-        text=message)
+dht = adafruit_dht.DHT22(board.D18)
 
 
 def ht_reading(interval=60):
@@ -164,7 +155,6 @@ def main():
     else:
         with open(data_cache_file, 'wb') as f:
             pickle.dump(data_to_post, f)
-
 
 
 if __name__ == '__main__':
