@@ -57,6 +57,8 @@ def ht_reading(interval=60):
             temp.append(temperature)
         except RuntimeError:
             pass
+    hum = [x for x in hum if x is not None]
+    temp = [x for x in temp if x is not None]
     if len(hum) > 0 and len(temp) > 0:
         return round(stats.mean(hum), 2), round(stats.mean(temp), 2)
     else:
