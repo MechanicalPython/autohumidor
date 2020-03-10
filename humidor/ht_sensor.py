@@ -41,12 +41,11 @@ credentials_file = f"{resources_file}/credentials.json"
 sheet_id_file = f'{resources_file}/sheet_id.txt'
 data_cache_file = f'{resources_file}/cache.pkl'
 
-dht = adafruit_dht.DHT22(board.D18)
-
 
 def ht_reading(interval=60):
     """Gives an average reading of humidity and temp for a given time interval (seconds).
     """
+    dht = adafruit_dht.DHT22(board.D18)
     t_end = time.time() + interval
     hum = []
     temp = []
@@ -137,7 +136,6 @@ class PostToSheets:
 
 def main():
     args = sys.argv
-
     if len(args) > 1 and args[1].isdigit():
         h, t = ht_reading(60 * int(args[1]))
     else:
