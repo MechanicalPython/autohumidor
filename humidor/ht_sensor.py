@@ -114,10 +114,11 @@ class PostToSheets:
     def fill_in_nan(self, next_posted_hour):
         """If there has been some error and data is missing, fill in the =na() for each missing data point"""
         # Get last item. If the last item is not one hour behind the next hour to be posted, fill in the rest with na()
-        last_hour = self.last_row()[0]
+        last_hour = self.last_row()
         if last_hour is None:
             # If there is no data in the sheet, just do nothing.
             return None
+        last_hour = last_hour[0]
         last_hour = datetime.strptime(last_hour, "%d/%m/%Y %H:00:00")
         next_posted_hour = datetime.strptime(next_posted_hour, "%d/%m/%Y %H:00:00")
         hours_between = (next_posted_hour - last_hour).seconds/60/60
