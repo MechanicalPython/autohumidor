@@ -147,16 +147,20 @@ def main():
 
     now = datetime.now()
     current_time = datetime(year=now.year, month=now.month, day=now.day, hour=now.hour).strftime("%d/%m/%Y %H:00:00")
-    data_to_post = [[current_time, str(h), str(t)]]
+    data_to_post = [current_time, str(h), str(t)]
 
+    # Init the cache file if needed.
     if os.path.exists(data_cache_file) is False:
         with open(data_cache_file, 'wb') as f:
             pickle.dump([], f)
 
+    # Open cache file, probably is empty list.
     with open(data_cache_file, 'rb') as f:
         cache_data = pickle.load(f)
-    data_to_post = cache_data.append(data_to_post)
 
+    # Append cache to read data.
+    cache_data.append(data_to_post)
+    data_to_post = cache_data
     if requests.get('http://www.google.com').status_code == 200:
         with open(sheet_id_file, 'r') as f:
             sheet_id = f.read()
