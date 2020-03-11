@@ -36,9 +36,13 @@ def ht_reading(interval=60):
 def continuous_reading():
     dht = adafruit_dht.DHT22(board.D18)
     while True:
-        t = dht.temperature  # Takes an indeterminant amount of time to return value.
-        h = dht.humidity
-        print(f'Humitidy: {h}, temp {t}')
+        try:
+            t = dht.temperature  # Takes an indeterminant amount of time to return value.
+            h = dht.humidity
+            print(f'Humitidy: {h}, temp {t}')
+        except RuntimeError as error:
+            print(error.args[0])
+        time.sleep(2.0)
 
 
 if __name__ == '__main__':
