@@ -33,12 +33,23 @@ def ht_reading(interval=60):
         return None, None
 
 
+def continuous_reading():
+    dht = adafruit_dht.DHT22(board.D18)
+    while True:
+        t = dht.temperature  # Takes an indeterminant amount of time to return value.
+        h = dht.humidity
+        print(f'Humitidy: {h}, temp {t}')
+
+
 if __name__ == '__main__':
     args = sys.argv
-
-    if len(args) > 1 and args[1].isdigit():
-        h, t = ht_reading(int(args[1]))
-    else:
+    if len(args) == 1:
         h, t = ht_reading(60)  # 10 minutes of readings.
-    print(f'Humitidy: {h}, temp {t}')
+        print(f'Humitidy: {h}, temp {t}')
+    else:
+        if args[1].isdigit():
+            h, t = ht_reading(int(args[1]))
+        elif args[1] == '-c':
+            continuous_reading()
+
 
