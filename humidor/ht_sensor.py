@@ -42,7 +42,6 @@ sheet_id_file = f'{resources_file}/sheet_id.txt'
 data_cache_file = f'{resources_file}/cache.pkl'
 
 
-
 def ht_reading(interval=60):
     """Gives an average reading of humidity and temp for a given time interval (seconds).
     """
@@ -62,8 +61,8 @@ def ht_reading(interval=60):
     hum = [x for x in hum if x is not None]
     temp = [x for x in temp if x is not None]
     if len(hum) > 0 and len(temp) > 0:
-        print(hum, temp)
-        return round(stats.mean(hum), 2), round(stats.mean(temp), 2)
+        # Use median values are sometimes bonkers big numbers are made, especially for humidity.
+        return round(stats.median(hum), 2), round(stats.median(temp), 2)
     else:
         return None, None
 

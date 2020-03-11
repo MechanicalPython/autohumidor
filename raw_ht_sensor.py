@@ -29,7 +29,7 @@ def ht_reading(interval=60):
             pass
         time.sleep(2)
     if len(hum) > 0 and len(temp) > 0:
-        return round(stats.mean(hum), 2), round(stats.mean(temp), 2)
+        return round(stats.median(hum), 2), round(stats.median(temp), 2)
     else:
         return None, None
 
