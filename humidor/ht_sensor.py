@@ -62,6 +62,7 @@ def ht_reading(interval=60):
     hum = [x for x in hum if x is not None]
     temp = [x for x in temp if x is not None]
     if len(hum) > 0 and len(temp) > 0:
+        print(hum, temp)
         return round(stats.mean(hum), 2), round(stats.mean(temp), 2)
     else:
         return None, None
@@ -165,7 +166,7 @@ def main():
     # Append cache to read data.
     cache_data.append(data_to_post)
     data_to_post = cache_data
-    print(data_to_post)
+
     if requests.get('http://www.google.com').status_code == 200:
         with open(sheet_id_file, 'r') as f:
             sheet_id = f.read()
