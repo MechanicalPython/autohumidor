@@ -165,6 +165,7 @@ def main():
     # Append cache to read data.
     cache_data.append(data_to_post)
     data_to_post = cache_data
+    print(data_to_post)
     if requests.get('http://www.google.com').status_code == 200:
         with open(sheet_id_file, 'r') as f:
             sheet_id = f.read()
