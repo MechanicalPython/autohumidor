@@ -41,13 +41,12 @@ credentials_file = f"{resources_file}/credentials.json"
 sheet_id_file = f'{resources_file}/sheet_id.txt'
 data_cache_file = f'{resources_file}/cache.pkl'
 
-dht = adafruit_dht.DHT22(board.D18)
 
 
 def ht_reading(interval=60):
     """Gives an average reading of humidity and temp for a given time interval (seconds).
     """
-
+    dht = adafruit_dht.DHT22(board.D18)
     t_end = time.time() + interval
     hum = []
     temp = []
@@ -59,6 +58,7 @@ def ht_reading(interval=60):
             temp.append(temperature)
         except RuntimeError:
             pass
+        time.sleep(2)
     hum = [x for x in hum if x is not None]
     temp = [x for x in temp if x is not None]
     if len(hum) > 0 and len(temp) > 0:
