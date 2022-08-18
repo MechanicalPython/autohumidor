@@ -38,5 +38,5 @@ slackclient==1.3.1
 ssh-import-id==5.6
 sysv-ipc==1.0.1
 uritemplate==3.0.0
-urllib3==1.24.3
+urllib3==1.26.5
 websocket-client==0.54.0
