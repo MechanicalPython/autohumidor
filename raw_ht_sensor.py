@@ -6,9 +6,6 @@ Measures humid and temp for a 10-second average and pushes to data.json in
 """
 
 import time
-import adafruit_dht
-import statistics as stats
-import sys
 from humidor import ht_sensor
 
 
