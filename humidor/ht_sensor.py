@@ -8,8 +8,14 @@ The following files need to be added to autohumidor/Resources/
 Measures temp and humidity for 10 minutes and adds that to the google sheets.
 If google sheets addition fails, save the data to a cache.pkl file to be uploaded when internet access is restored.
 
+Run the script every hour to get an hourly reading.
 
 Circuit requires a 4.7K - 10K resistor.
+pwr --- resistor --- 3.3v
+            |
+data --- resistor --- pin 4
+ground --------------- ground
+
 Wires
     power - black
     data  - purple
@@ -176,16 +182,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
