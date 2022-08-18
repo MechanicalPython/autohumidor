@@ -6,40 +6,16 @@ Measures humid and temp for a 10-second average and pushes to data.json in
 """
 
 import time
-import board
 import adafruit_dht
 import statistics as stats
 import sys
-
-
-def ht_reading(interval=60):
-    """Gives an average reading of humidity and temp for a given time interval (seconds).
-    """
-    dht = adafruit_dht.DHT22(board.D18)
-    t_end = time.time() + interval
-    hum = []
-    temp = []
-    while time.time() < t_end:
-        try:
-            temperature = dht.temperature   # Takes an indeterminant amount of time to return value.
-            humidity = dht.humidity
-            hum.append(humidity)
-            temp.append(temperature)
-        except RuntimeError:
-            pass
-        time.sleep(2)
-    if len(hum) > 0 and len(temp) > 0:
-        return round(stats.median(hum), 2), round(stats.median(temp), 2)
-    else:
-        return None, None
+from humidor import ht_sensor
 
 
 def continuous_reading():
-    dht = adafruit_dht.DHT22(board.D18)
     while True:
         try:
-            t = dht.temperature  # Takes an indeterminant amount of time to return value.
-            h = dht.humidity
+            t, h = ht_sensor.ht_reading(2)
             print(f'Humitidy: {h}, temp {t}')
         except RuntimeError as error:
             print(error.args[0])
@@ -47,14 +23,6 @@ def continuous_reading():
 
 
 if __name__ == '__main__':
-    args = sys.argv
-    if len(args) == 1:
-        h, t = ht_reading(60)  # 10 minutes of readings.
-        print(f'Humitidy: {h}, temp {t}')
-    else:
-        if args[1].isdigit():
-            h, t = ht_reading(int(args[1]))
-        elif args[1] == '-c':
-            continuous_reading()
+    continuous_reading()
 
 

@@ -30,7 +30,6 @@ import Adafruit_DHT
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-quit()
 
 resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/Resources"
 
