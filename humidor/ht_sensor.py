@@ -29,7 +29,7 @@ import sys
 import Adafruit_DHT
 
 import gspread
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.credentials import Credentials
 
 resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/Resources"
 
@@ -72,7 +72,7 @@ class PostToSheets:
     def __init__(self, sheet_name, SHEET_ID):
         self.SCOPE = ['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets']
         self.SHEET_ID = SHEET_ID
-        self.creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, self.SCOPE)
+        self.creds = Credentials.from_authorized_user_file(credentials_file, self.SCOPE)
         self.client = gspread.authorize(self.creds)
         self.sheet = self.client.open(sheet_name).sheet1
         self.all_values = self.sheet.get_all_values()
