@@ -26,11 +26,11 @@ import requests
 import pickle
 import sys
 
-import adafruit_dht
-import board
+import Adafruit_DHT
 
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+quit()
 
 resources_file = f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/Resources"
 
@@ -45,14 +45,12 @@ data_cache_file = f'{resources_file}/cache.pkl'
 def ht_reading(interval=60):
     """Gives an average reading of humidity and temp for a given time interval (seconds).
     """
-    dht = adafruit_dht.DHT22(board.D18)
     t_end = time.time() + interval
     hum = []
     temp = []
     while time.time() < t_end:
         try:
-            temperature = dht.temperature   # Takes an indeterminant amount of time to return value.
-            humidity = dht.humidity
+            humidity, temperature = Adafruit_DHT.read(Adafruit_DHT.DHT22, 23)
             hum.append(humidity)
             temp.append(temperature)
         except RuntimeError:

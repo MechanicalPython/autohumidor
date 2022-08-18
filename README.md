@@ -1,6 +1,6 @@
 Take 5 minutes of readings every hour then post the average to the google sheets. 
 
-Uses the Adafruit_DHT package to actually read the humity and temperature. 
+Uses the Adafruit_DHT package to actually read the humidity and temperature. 
 
 
 Project structure

@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 """
-Measures humid and temp for a 10 second average and pushes to data.json in
+Measures humid and temp for a 10-second average and pushes to data.json in
 {datetime.datetime.now(): {'Humidity': h, 'Temperature': t} } format
 """
 
