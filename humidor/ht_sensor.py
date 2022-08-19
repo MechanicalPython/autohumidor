@@ -44,7 +44,7 @@ if os.path.exists(resources_file) is False:
 credentials_file = f"{resources_file}/credentials.json"
 sheet_id_file = f'{resources_file}/sheet_id.txt'
 data_cache_file = f'{resources_file}/cache.pkl'
-
+data_pin = 4
 
 def ht_reading(interval=60):
     """Gives an average reading of humidity and temp for a given time interval (seconds).
@@ -54,7 +54,7 @@ def ht_reading(interval=60):
     temp = []
     while time.time() < t_end:
         try:
-            humidity, temperature = Adafruit_DHT.read(Adafruit_DHT.DHT22, 23)
+            humidity, temperature = Adafruit_DHT.read(Adafruit_DHT.DHT22, data_pin)
             hum.append(humidity)
             temp.append(temperature)
         except RuntimeError:
