@@ -1,7 +1,7 @@
-datetime~=4.5
-requests~=2.28.1
-Adafruit_Python_DHT
-gspread==5.4.0
-google-api-python-client
+datetime==5.5
+requests==2.32.3
+Adafruit-DHT==1.4.0
+gspread==6.1.2
+google-api-python-client==2.133.0
 google-auth-httplib2
-google-auth-oauthlib
+google-auth-oauthlib==1.2.0
