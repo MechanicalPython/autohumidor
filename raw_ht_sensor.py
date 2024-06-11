@@ -12,7 +12,7 @@ from humidor import ht_sensor
 def continuous_reading():
     while True:
         try:
-            t, h = ht_sensor.ht_reading(2)
+            h, t = ht_sensor.ht_reading(2)
             print(f'Humitidy: {h}, temp {t}')
         except RuntimeError as error:
             print(error.args[0])
